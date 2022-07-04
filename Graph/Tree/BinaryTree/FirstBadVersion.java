@@ -34,7 +34,14 @@ Constraints:
 public class FirstBadVersion {
    
     /* The isBadVersion API is defined in the parent class VersionControl.
-      boolean isBadVersion(int version); */
+      boolean isBadVersion(int version); 
+      
+      Algorithm:
+        track the start and the end
+        calculate a middle index based on the start and the end
+        if the middle index is not a bad version, start at the middle+1 (check after the second half of the array)
+        otherwise, end at the middle (check the first half of the array)
+      */
 
     public int firstBadVersion(int n) {
         int start=1, end=n;
