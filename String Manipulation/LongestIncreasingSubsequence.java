@@ -9,6 +9,8 @@ public class LongestIncreasingSubsequence {
     public static int maxIncreasing(int[] arr){
         if(arr==null || arr.length==0) return 0;
         if(arr.length==1) return 1;
+        
+        int[] result=new int[arr.length];
         int maxIncreasing=0;
         for(int i=0;i<arr.length;i++){
             if(arr[i-1]<arr[i]){
