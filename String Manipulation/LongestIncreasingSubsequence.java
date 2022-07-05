@@ -9,13 +9,21 @@ public class LongestIncreasingSubsequence {
     public static int maxIncreasing(int[] arr){
         if(arr==null || arr.length==0) return 0;
         if(arr.length==1) return 1;
-        
+
         int[] result=new int[arr.length];
-        int maxIncreasing=0;
-        for(int i=0;i<arr.length;i++){
+        result[0]=1;
+
+        for(int i=1;i<arr.length;i++){
             if(arr[i-1]<arr[i]){
-                maxIncreasing=1+Math.max(maxIncreasing, maxIncreasing[0-> (i-1)]);
+                result[i]=1 + findMaxLength(result, i-1);
             }
         }
+        return result[result.length-1];
+    }
+    public static int findMaxLength(int[] result, int index){
+        int maxLength=0;
+        for(int i=0;i<index;i++)
+            if(maxLength<=result[i]) maxLength=result[i];
+        return maxLength;
     }
 }
