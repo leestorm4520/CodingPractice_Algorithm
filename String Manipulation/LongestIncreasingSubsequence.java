@@ -1,4 +1,3 @@
-package String Manipulation;
 
 public class LongestIncreasingSubsequence {
     public static void main(String[] args){
@@ -18,11 +17,12 @@ public class LongestIncreasingSubsequence {
                 result[i]=1 + findMaxLength(result, i-1);
             }
         }
-        return result[result.length-1];
+
+        return findMaxLength(result, result.length-1);
     }
     public static int findMaxLength(int[] result, int index){
         int maxLength=0;
-        for(int i=0;i<index;i++)
+        for(int i=0;i<=index;i++)
             if(maxLength<=result[i]) maxLength=result[i];
         return maxLength;
     }
