@@ -17,7 +17,9 @@ public class LongestIncreasingSubsequence {
                 result[i]=1 + findMaxLength(result, i-1);
             }
         }
-
+        for(int i=0;i<result.length;i++){
+            System.out.println(result[i]);
+        }
         return findMaxLength(result, result.length-1);
     }
     public static int findMaxLength(int[] result, int index){
