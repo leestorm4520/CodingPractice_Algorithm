@@ -24,6 +24,8 @@ nums is sorted in non-decreasing order.
 
 Follow up: Squaring each element and sorting the new array is very trivial, could you find an O(n) solution using a different approach?
  */
+
+
 import java.util.*;
 public class SquaresOfArray {
     public static void main(String[] args){
@@ -44,7 +46,7 @@ public class SquaresOfArray {
         if(l<h){
             p=partition(nums, l, h);
             quickSort(nums, l, p-1);
-            quickSort(nums, p, h);
+            quickSort(nums, p+1, h);
         }
 
 
@@ -72,6 +74,26 @@ public class SquaresOfArray {
         nums[i1]=nums[i2];
         nums[i2]=tmp;
     }
-    
-    
 }
+
+/*
+ * Two pointers solution
+ * Create two pointers to track the beginning and the ending of an array
+ * 
+ * 
+ * int n = A.length;
+        int[] result = new int[n];
+        int i = 0, j = n - 1;
+        for (int p = n - 1; p >= 0; p--) {
+            if (Math.abs(A[i]) > Math.abs(A[j])) {
+                result[p] = A[i] * A[i];
+                i++;
+            } else {
+                result[p] = A[j] * A[j];
+                j--;
+            }
+        }
+        return result;
+
+ * 
+ */
