@@ -5,7 +5,7 @@
  * size of window is fixed
  */
 
-public class slidingImplement {
+public class onePointer {
     static int maxSum(int arr[], int n, int k){
         if(n<k){
             System.out.println("Invalid");
