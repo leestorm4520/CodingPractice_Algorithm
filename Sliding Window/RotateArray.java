@@ -30,5 +30,10 @@ Try to come up with as many solutions as you can. There are at least three diffe
 Could you do it in-place with O(1) extra space?
  */
 public class RotateArray {
-    
+    public static void main(String[] args){
+
+    }   
+    public static void rotate (int[] nums, int k){
+        
+    }
 }
