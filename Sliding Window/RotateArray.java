@@ -32,24 +32,24 @@ Could you do it in-place with O(1) extra space?
 import java.util.*;
 public class RotateArray {
     public static void main(String[] args){
-        int[] nums= {1,2,3,4,5,6,7};
-        int k=3;
+        int[] nums= {-1,-100,3,99};
+        int k=2;
         rotate(nums, k);
+        System.out.println(Arrays.toString(nums));
 
     }   
-    //M1
+    //M1: work but took too long
+    // public static void rotate (int[] nums, int k){
+    //    ArrayList<Integer> result=new ArrayList<Integer>(nums.length);
+    //    for(int num: nums) result.add(num);
+    //    for(int i=0;i<k;i++){
+    //         int temp=result.get(result.size()-1);
+    //         result.remove(result.size()-1);
+    //         result.add(0,temp);
+    //    }
+    //    for(int i=0;i<nums.length;i++) nums[i]=result.get(i);
+    // }
     public static void rotate (int[] nums, int k){
-        int[] result=new int[nums.length];
-        int j=0;
-        for(int i=k;i<result.length; i++) {
-            result[i]=nums[j];
-            j++;
-        }
-        j=k;
-        for(int i=0;i<k;i++){
-            result[i]=nums[result.length-j];
-            j--;
-        }
-        System.out.println(Arrays.toString(result));
+        
     }
 }
