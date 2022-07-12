@@ -29,11 +29,27 @@ Follow up:
 Try to come up with as many solutions as you can. There are at least three different ways to solve this problem.
 Could you do it in-place with O(1) extra space?
  */
+import java.util.*;
 public class RotateArray {
     public static void main(String[] args){
+        int[] nums= {1,2,3,4,5,6,7};
+        int k=3;
+        rotate(nums, k);
 
     }   
+    //M1
     public static void rotate (int[] nums, int k){
-        
+        int[] result=new int[nums.length];
+        int j=0;
+        for(int i=k;i<result.length; i++) {
+            result[i]=nums[j];
+            j++;
+        }
+        j=k;
+        for(int i=0;i<k;i++){
+            result[i]=nums[result.length-j];
+            j--;
+        }
+        System.out.println(Arrays.toString(result));
     }
 }
