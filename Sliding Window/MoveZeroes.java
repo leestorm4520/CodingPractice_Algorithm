@@ -71,7 +71,7 @@ public class MoveZeroes {
             }
         }
     }
-
+    //fastest
     public void move3(int[] nums){
         int i, j=0;
         for(i=0;i<nums.length;i++){
