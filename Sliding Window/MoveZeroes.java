@@ -23,23 +23,25 @@ Constraints:
 import java.util.*;
 public class MoveZeroes {
     public static void main(String[] args){
-        int[] nums={0,1,0,3,12};
+        int[] nums={1,0,1};
         move(nums);
         System.out.println(Arrays.toString(nums));
     }
     public static void move(int[] nums){
-        int i=0;
-        int left=0, right=nums.length-1;
-        while(left<right){
-            int temp=nums[i];
-            if(temp==0 && nums[right]!=0){
-                swap(nums, i, right);
-                right--;
-            }
-            if(temp==0 && nums[left]!=0){
-                swap(nums, i, left);
+        int left=0, right=1;
+        while(left<right && right<nums.length){
+            int tmp1=nums[left];
+            int tmp2=nums[right];
+            if(tmp1==0 && tmp2 !=0){
+                swap(nums, left, right);
                 left++;
+                right++;
             }
+            if(tmp1!=0) left++;
+            if(tmp2==0) right++;
+            if(left==right) right++;
+            
+
         }
     }
     public static void swap(int[] nums, int i, int j){
