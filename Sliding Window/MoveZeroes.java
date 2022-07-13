@@ -44,6 +44,19 @@ public class MoveZeroes {
 
         }
     }
+
+    public static void move1(int[] nums){
+        int[] result=new int[nums.length];
+        int j=0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]>0){
+                result[j]=nums[i];
+                j++;
+            } 
+        }
+        Arrays.fill(result, j+1, nums.length-1, 0);
+    }
+
     public static void swap(int[] nums, int i, int j){
         int tmp=nums[i];
         nums[i]=nums[j];
