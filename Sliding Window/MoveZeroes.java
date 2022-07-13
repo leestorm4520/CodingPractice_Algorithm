@@ -23,8 +23,8 @@ Constraints:
 import java.util.*;
 public class MoveZeroes {
     public static void main(String[] args){
-        int[] nums={1,0,1};
-        move(nums);
+        int[] nums={4,2,4,0,0,3,0,5,1,0};
+        move1(nums);
         System.out.println(Arrays.toString(nums));
     }
     public static void move(int[] nums){
@@ -55,6 +55,32 @@ public class MoveZeroes {
             } 
         }
         Arrays.fill(result, j+1, nums.length-1, 0);
+        for(int i=0;i<nums.length;i++) nums[i]=result[i];
+    }
+
+    public void move2(int[] nums) {
+        int snowBallSize = 0; 
+        for (int i=0;i<nums.length;i++){
+	        if (nums[i]==0){
+                snowBallSize++; 
+            }
+            else if (snowBallSize > 0) {
+	            int t = nums[i];
+	            nums[i]=0;
+	            nums[i-snowBallSize]=t;
+            }
+        }
+    }
+
+    public void move3(int[] nums){
+        int i, j=0;
+        for(i=0;i<nums.length;i++){
+            if(nums[i]!=0){
+                nums[j]=nums[i];
+                j++;
+            }
+        }
+        for(i=j;i<nums.length;i++) nums[i]=0;
     }
 
     public static void swap(int[] nums, int i, int j){
