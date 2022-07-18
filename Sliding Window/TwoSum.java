@@ -40,13 +40,13 @@ import java.util.*;
 public class TwoSum {
 
     public static void main(String[] args){
-        int[] nums= [2,7,11,15];
+        int[] nums= {2,7,11,15};
         int target=9;
-        System.out.println(Arrays.toString(twoSum(nums)));
+        System.out.println(Arrays.toString(twoSum(nums, target)));
 
     }
     public static int[] twoSum(int[] nums, int target){
-        int[] result=[0,0];
+        int[] result={0,0};
         int i=0;
         HashMap<Integer,Integer> numHash=new HashMap<>();
         for(i=0;i<nums.length;i++) numHash.put(nums[i],i);
@@ -54,13 +54,11 @@ public class TwoSum {
         while(result[0]==0 && i<nums.length){
             int tmp=target -nums[i];
             if(numHash.containsKey(tmp)){
-                result[0]=Math.min(i,tmp);
-                result[1]=Math.max(i,tmp);
+                result[0]=Math.min(i,numHash.get(tmp));
+                result[1]=Math.max(i,numHash.get(tmp));
             }
+            i++;
         }
-        return result;
-
-
         return result;
     }
 }
