@@ -20,3 +20,21 @@ Constraints:
 1 <= s.length <= 105
 s[i] is a printable ascii character.
 '''
+def reverseString(s):
+    l,r=0,len(s)-1
+    while(l<r):
+        reverse(s,l,r)
+        l+=1
+        r-=1
+    return s
+
+def reverse(s, i, k):
+    tmp=s[i]
+    s[i]=s[k]
+    s[k]=tmp
+
+def main():
+    s = ["h","e","l","l","o"]
+    print(reverseString(s))
+if __name__=="__main__":
+    main()
