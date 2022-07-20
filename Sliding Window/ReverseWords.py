@@ -43,6 +43,13 @@ def reverse(word):
 def main():
     s = "Let's take LeetCode contest"
     print(reverseWords(s))
+    from timeit import timeit
+    setup = 's = "Let\'s take LeetCode contest"'
+    statements = ("' '.join(s.split()[::-1])[::-1]",
+	          "' '.join(x[::-1] for x in s.split())",
+	          "' '.join([x[::-1] for x in s.split()])")
+    for stmt in statements:
+        print(' '.join('%.2f' % timeit(stmt, setup) for _ in range(5)), 'seconds for:', stmt)
 
 if __name__=="__main__":
     main()
@@ -54,3 +61,5 @@ if __name__=="__main__":
     #         newStr+=''.join(list(word[::-1]))+" "
     #     newStr=newStr.strip()
     #     return newStr
+
+    # return ' '.join(s.split()[::-1])[::-1]
