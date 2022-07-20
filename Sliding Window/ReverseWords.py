@@ -23,7 +23,7 @@ All the words in s are separated by a single space.
 '''
 def reverseWords(str):
     newStr=""
-    words=str.split(" ");
+    words=str.split();
     for word in words:
         newWord=list(word)
         reverse(newWord)
@@ -46,3 +46,11 @@ def main():
 
 if __name__=="__main__":
     main()
+
+    #  def reverseWords(self, s: str) -> str:
+    #     newStr=""
+    #     words=s.split();
+    #     for word in words:
+    #         newStr+=''.join(list(word[::-1]))+" "
+    #     newStr=newStr.strip()
+    #     return newStr
