@@ -1,4 +1,4 @@
-from TestAutomation import app
+from ..app import app
 import unittest
 
 class TestClass(unittest.TestCase):
