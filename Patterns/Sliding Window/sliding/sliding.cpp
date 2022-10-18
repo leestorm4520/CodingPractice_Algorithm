@@ -1,7 +1,8 @@
-using namespace std;
 #include<iostream>
 #include<vector>
 #include<algorithm>
+
+using namespace std;
 
 class SlidingWindow{
 
@@ -39,11 +40,13 @@ class SlidingWindow{
 
 };
 int main(int argc, char* argv[]){
-  vector<double> avg=SlidingWindow::findAverage(4, vector<int>{3,45,-5,7,26,63,1,67});
+  vector<int> arr{3,45,-5,7,26,63,1,67};
+  vector<double> avg=SlidingWindow::findAverage(4, arr);
   cout<<"Average of subarrays of size 4 is:  ";
   for(double d: avg){
     cout<<d<<" ";
     }
   cout<<endl;
-  vector<double> max= AverageOf
+  double max= SlidingWindow::findMax(4, arr);
+  cout<<"Maximum of subarrays of size 5 is: "<<max<<endl;
 }
