@@ -38,4 +38,5 @@ def main():
     print("Averages of subarrays of size K: " + str(result))
     print("Smallest subarray with a great sum of "+str(slidingWindow.max) + " is " + str(slidingWindow.findSmallest()))
 
+
 main()
