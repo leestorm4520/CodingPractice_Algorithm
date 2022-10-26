@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.sonarsource.parent</groupId>
+    <artifactId>parent</artifactId>
+    <version>63.0.187</version>
+  </parent>
+
+  <groupId>org.sonarsource.python</groupId>
+  <artifactId>python</artifactId>
+  <version>3.19.0.10254</version>
+  <packaging>pom</packaging>
+
+  <name>Python</name>
+  <inceptionYear>2011</inceptionYear>
+  <organization>
+    <name>SonarSource and Waleri Enns</name>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>GNU LGPL 3</name>
+      <url>http://www.gnu.org/licenses/lgpl.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>wenns</id>
+      <name>Waleri Enns</name>
+    </developer>
+    <developer>
+      <id>godin</id>
+      <name>Evgeny Mandrikov</name>
+      <organization>SonarSource</organization>
+    </developer>
+    <developer>
+      <id>lindamartin</id>
+      <name>Linda Martin</name>
+      <email>linda.martin@sonarsource.com</email>
+      <organization>SonarSource</organization>
+    </developer>
+  </developers>
+
+  <modules>
+    <module>python-frontend</module>
+    <module>python-checks</module>
+    <module>sonar-python-plugin</module>
+    <module>its</module>
+    <module>python-checks-testkit</module>
+  </modules>
+
+  <scm>
+    <connection>scm:git:git@github.com:SonarSource/sonar-python.git</connection>
+    <developerConnection>scm:git:git@github.com:SonarSource/sonar-python.git</developerConnection>
+    <url>https://github.com/SonarSource/sonar-python</url>
+    <tag>HEAD</tag>
+  </scm>
+  <issueManagement>
+    <system>JIRA</system>
+    <url>https://jira.sonarsource.com/browse/SONARPY</url>
+  </issueManagement>
+  <ciManagement>
+    <system>cirrus-ci</system>
+    <url>https://cirrus-ci.com/github/SonarSource/sonar-python</url>
+  </ciManagement>
+
+  <properties>
+    <license.title>SonarQube Python Plugin</license.title>
+
+    <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
+    <sonar.pluginClass>org.sonar.plugins.python.PythonPlugin</sonar.pluginClass>
+    <sonar.pluginName>Python</sonar.pluginName>
+    <gitRepositoryName>sonar-python</gitRepositoryName>
+    <!-- Release: enable publication to Bintray -->
+    <artifactsToPublish>${project.groupId}:sonar-python-plugin:jar</artifactsToPublish>
+    <!-- we depend on API ${sonar.version} but we keep backward compatibility with LTS -->
+    <sonarQubeMinVersion>7.9</sonarQubeMinVersion>
+
+    <skip.its>true</skip.its>
+
+    <!-- versions -->
+    <commons.io.version>2.8.0</commons.io.version>
+    <commons.lang.version>2.6</commons.lang.version>
+    <assertj-core.version>3.19.0</assertj-core.version>
+    <junit.version>4.13.2</junit.version>
+    <logback.version>1.2.3</logback.version>
+    <maven.project.version>2.2.1</maven.project.version>
+    <mockito.version>3.9.0</mockito.version>
+    <sonar.version>9.3.0.51899</sonar.version>
+    <sonar.orchestrator.version>3.36.0.63</sonar.orchestrator.version>
+    <sonar.api.version>9.11.0.290</sonar.api.version>
+    <sonar-analyzer-commons.version>2.0.0.1075</sonar-analyzer-commons.version>
+    <sonarlint-core.version>6.3.0.36253</sonarlint-core.version>
+    <sslr.version>1.23</sslr.version>
+    <protobuf.version>3.19.6</protobuf.version>
+    <woodstox.version>6.2.7</woodstox.version>
+
+    <!-- Advertise minimal required JRE version -->
+    <jre.min.version>11</jre.min.version>
+
+    <!-- JDK Build versions -->
+    <jdk.min.version>11</jdk.min.version>
+    <jdk.source.version>11</jdk.source.version>
+    <jdk.target.version>11</jdk.target.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- compile dependencies -->
+      <dependency>
+        <groupId>org.sonarsource.sslr</groupId>
+        <artifactId>sslr-core</artifactId>
+        <version>${sslr.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.analyzer-commons</groupId>
+        <artifactId>sonar-analyzer-commons</artifactId>
+        <version>${sonar-analyzer-commons.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.analyzer-commons</groupId>
+        <artifactId>sonar-xml-parsing</artifactId>
+        <version>${sonar-analyzer-commons.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.analyzer-commons</groupId>
+        <artifactId>sonar-performance-measure</artifactId>
+        <version>${sonar-analyzer-commons.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.analyzer-commons</groupId>
+        <artifactId>sonar-analyzer-test-commons</artifactId>
+        <version>${sonar-analyzer-commons.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.analyzer-commons</groupId>
+        <artifactId>sonar-regex-parsing</artifactId>
+        <version>${sonar-analyzer-commons.version}</version>
+      </dependency>
+      <!-- used by StaxParser, CoberturaParser and TestSuiteParser -->
+      <dependency>
+        <groupId>org.codehaus.staxmate</groupId>
+        <artifactId>staxmate</artifactId>
+        <version>2.0.1</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>${commons.lang.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>${commons.io.version}</version>
+      </dependency>
+      <!-- used by StaxParser and CoberturaParser -->
+      <dependency>
+        <groupId>org.codehaus.woodstox</groupId>
+        <artifactId>woodstox-core-lgpl</artifactId>
+        <version>${woodstox.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>30.1.1-jre</version>
+      </dependency>
+
+      <!-- test dependencies -->
+      <dependency>
+        <groupId>org.sonarsource.orchestrator</groupId>
+        <artifactId>sonar-orchestrator</artifactId>
+        <version>${sonar.orchestrator.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.sonarqube</groupId>
+        <artifactId>sonar-testing-harness</artifactId>
+        <version>${sonar.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.sslr</groupId>
+        <artifactId>sslr-testing-harness</artifactId>
+        <version>${sslr.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>${mockito.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>${assertj-core.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.sonarlint.core</groupId>
+        <artifactId>sonarlint-core</artifactId>
+        <version>${sonarlint-core.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.sonarlint.core</groupId>
+        <artifactId>sonarlint-plugin-api</artifactId>
+        <version>${sonarlint-core.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>${logback.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.sonarqube</groupId>
+        <artifactId>sonar-plugin-api-impl</artifactId>
+        <version>${sonar.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <!-- provided dependencies -->
+      <dependency>
+        <groupId>org.sonarsource.api.plugin</groupId>
+        <artifactId>sonar-plugin-api</artifactId>
+        <version>${sonar.api.version}</version>
+        <scope>provided</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <profiles>
+    <profile>
+      <id>its</id>
+      <properties>
+        <skip.its>false</skip.its>
+      </properties>
+    </profile>
+  </profiles>
+</project>
