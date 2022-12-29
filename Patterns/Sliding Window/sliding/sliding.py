@@ -37,7 +37,7 @@ class SlidingWindow:
       # right is the end of substring, being (k-1)th
       # count is the number of distinct substrings in the current substring
       left, right, maxLength, count = 0, 0, 0, 0
-      
+
        # dictionary to keep track of how often a character shows up in the line
       dict = {}
       for character in self.line:
@@ -55,17 +55,8 @@ class SlidingWindow:
             count -=1
         right+=1
       return self.line[left:right]
-      
 
-      # while right < len(self.line) - 1 && left < right:
-      #   if arr[right] == 0 && count < k:
-      #     arr[right] = 1
-      #     count++
-      #     right++
-      #   while count > k:
-      #     maxLength = max(maxLength, right - left + 1)
-      #     if 
-      # return maxLength
+
 
 def main():
     slidingWindow=SlidingWindow([3,45,-5,7,26,63,1,67], 4, 49, "aaravfffberefessss")
