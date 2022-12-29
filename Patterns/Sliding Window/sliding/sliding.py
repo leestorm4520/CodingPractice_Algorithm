@@ -37,29 +37,35 @@ class SlidingWindow:
       # right is the end of substring, being (k-1)th
       # count is the number of distinct substrings in the current substring
       left, right, maxLength, count = 0, 0, 0, 0
+      left_final = 0
 
        # dictionary to keep track of how often a character shows up in the line
       dict = {}
+
       for character in self.line:
         dict[character] = 0
 
       while right < len(self.line):
-        dict[self.line[right]]+=1
         if dict[self.line[right]] == 0:
           count+=1
+        dict[self.line[right]]+=1
         while count > self.k:
           maxLength = max(maxLength, right - left +1)
-          left+=1
-          dict[self.line[left]]-=1
-          if dict[self.line[left]] == 0 :
+          if maxLength <= right - left +1:
+              maxLength = right - left+ 1
+              left_final = left
+          if dict[self.line[left]] == 1:
             count -=1
+          dict[self.line[left]]-=1
+          left+=1
         right+=1
-      return self.line[left:right]
+      print(left_final)
+      return self.line[left_final:left_final+maxLength-1]
 
 
 
 def main():
-    slidingWindow=SlidingWindow([3,45,-5,7,26,63,1,67], 4, 49, "aaravfffberefessss")
+    slidingWindow=SlidingWindow([3,45,-5,7,26,63,1,67], 3, 49, "cbbebi")
     print("Averages of subarrays of size K: " + str(slidingWindow.findAverageSubArray()))
     print("Smallest subarray with a great sum of "+str(slidingWindow.max) + " is " + str(slidingWindow.findSmallestSubArray()))
     print("Longest substring with "+ str(slidingWindow.k)+" distinct character is "+str(slidingWindow.findLongestSubstring()))
