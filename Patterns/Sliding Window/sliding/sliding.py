@@ -32,6 +32,8 @@ class SlidingWindow:
         if minLength == math.inf:
             return []
         return self.arr[windowStart:windowEnd]
+
+    # time complexity: O(N+N) (N is the number of characters in the input string)
     def findLongestSubstring(self):
       # left is the start of substring
       # right is the end of substring, being (k-1)th
@@ -45,12 +47,18 @@ class SlidingWindow:
       for character in self.line:
         dict[character] = 0
 
+      '''
+      add one character to the window (slide the window ahead)
+      shrink the window from the beginning if count > k
+      while shrinking, decrement the character's frequency going out of window
+      and the count if the character's frequency is 1 (unique in the substring)
+      '''
       while right < len(self.line):
         if dict[self.line[right]] == 0:
           count+=1
         dict[self.line[right]]+=1
         while count > self.k:
-          maxLength = max(maxLength, right - left +1)
+          # maxLength = max(maxLength, right - left +1)
           if maxLength <= right - left +1:
               maxLength = right - left+ 1
               left_final = left
@@ -59,9 +67,29 @@ class SlidingWindow:
           dict[self.line[left]]-=1
           left+=1
         right+=1
-      print(left_final)
       return self.line[left_final:left_final+maxLength-1]
+    def fruitIntoBaskets(self):
+      charList = list()
+      charList.extend(self.line)
+      left, right, maxLength, count = 0, 0, 0, 0
+      self.k = 2
 
+      dict = {}
+      for character in charList:
+        dict[character] = 0
+      while right < len(charList):
+        if dict[charList[right]] == 0:
+          count+=1
+        dict[charList[right]]+=1
+        print(maxLength)
+        while count > self.k:
+          maxLength = max(maxLength, right - left +1)
+          if dict[charList[left]] == 1:
+            count -=1
+          dict[charList[left]]-=1
+          left+=1
+        right+=1
+      return maxLength
 
 
 def main():
@@ -69,5 +97,6 @@ def main():
     print("Averages of subarrays of size K: " + str(slidingWindow.findAverageSubArray()))
     print("Smallest subarray with a great sum of "+str(slidingWindow.max) + " is " + str(slidingWindow.findSmallestSubArray()))
     print("Longest substring with "+ str(slidingWindow.k)+" distinct character is "+str(slidingWindow.findLongestSubstring()))
+    print("Max fruits into 2 baskets are "+ str(slidingWindow.fruitIntoBaskets()))
 
 main()
