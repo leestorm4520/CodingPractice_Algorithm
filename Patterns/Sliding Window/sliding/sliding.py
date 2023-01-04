@@ -71,8 +71,7 @@ class SlidingWindow:
     def fruitIntoBaskets(self):
       charList = list()
       charList.extend(self.line)
-      left, right, maxLength, count = 0, 0, 0, 0
-      self.k = 2
+      left, right, maxLength = 0, 0, 0
       dict = {}
 
       # try to extend the range [left, right]
@@ -84,26 +83,26 @@ class SlidingWindow:
 
         # shrink the sliding window, until we are left with 2 distinct characters
         while len(dict) > 2:
-          leftChar = dict[left]
+          leftChar = charList[left]
           dict[leftChar] -= 1
           if dict[leftChar] == 0:
             del dict[leftChar]
           left +=1
         maxLength = max(maxLength, right - left + 1)
       return maxLength
-      while right < len(charList):
-        if dict[charList[right]] == 0:
-          count+=1
-        dict[charList[right]]+=1
-        print(maxLength)
-        while count >= self.k:
-          maxLength = max(maxLength, right - left +1)
-          if dict[charList[left]] == 1 and count > self.k:
-            count -=1
-            dict[charList[left]]-=1
-            left+=1
-        right+=1
-      return maxLength
+      # while right < len(charList):
+      #   if dict[charList[right]] == 0:
+      #     count+=1
+      #   dict[charList[right]]+=1
+      #   print(maxLength)
+      #   while count >= self.k:
+      #     maxLength = max(maxLength, right - left +1)
+      #     if dict[charList[left]] == 1 and count > self.k:
+      #       count -=1
+      #       dict[charList[left]]-=1
+      #       left+=1
+      #   right+=1
+      # return maxLength
 
 
 def main():
