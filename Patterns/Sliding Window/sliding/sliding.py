@@ -46,28 +46,45 @@ class SlidingWindow:
 
       for character in self.line:
         dict[character] = 0
+      for right in range(len(self.line)):
+        rightChar = self.line[right]
+        if rightChar not in dict:
+          dict[rightChar] = 0
+        dict[rightChar] +=1
+        while len(dict) > self.k:
+          leftChar = self.line[left]
+          dict[leftChar] -=1
+          if dict[leftChar] == 0:
+            del dict[leftChar]
+          left += 1
+        if maxLength <= right - left + 1:
+          maxLength = right - left +1
+          left_final = left
+      return self.line[left_final:left_final+maxLength] # behave like a range so [start to end -1 th]
 
-      '''
-      add one character to the window (slide the window ahead)
-      shrink the window from the beginning if count > k
-      while shrinking, decrement the character's frequency going out of window
-      and the count if the character's frequency is 1 (unique in the substring)
-      '''
-      while right < len(self.line):
-        if dict[self.line[right]] == 0:
-          count+=1
-        dict[self.line[right]]+=1
-        while count > self.k:
-          # maxLength = max(maxLength, right - left +1)
-          if maxLength <= right - left +1:
-              maxLength = right - left+ 1
-              left_final = left
-          if dict[self.line[left]] == 1:
-            count -=1
-          dict[self.line[left]]-=1
-          left+=1
-        right+=1
-      return self.line[left_final:left_final+maxLength-1]
+
+
+      # add one character to the window (slide the window ahead)
+      # shrink the window from the beginning if count > k
+      # while shrinking, decrement the character's frequency going out of window
+      # and the count if the character's frequency is 1 (unique in the substring)
+
+      # while right < len(self.line):
+      #   if dict[self.line[right]] == 0:
+      #     count+=1
+      #   dict[self.line[right]]+=1
+      #   while count > self.k:
+      #     # maxLength = max(maxLength, right - left +1)
+      #     if maxLength <= right - left +1:
+      #         maxLength = right - left+ 1
+      #         left_final = left
+      #     if dict[self.line[left]] == 1:
+      #       count -=1
+      #     dict[self.line[left]]-=1
+      #     left+=1
+      #   right+=1
+      # return self.line[left_final:left_final+maxLength-1]
+
     def fruitIntoBaskets(self):
       charList = list()
       charList.extend(self.line)
