@@ -34,7 +34,7 @@ class SlidingWindow:
         return self.arr[windowStart:windowEnd]
 
     # time complexity: O(N+N) (N is the number of characters in the input string)
-    def findLongestSubstring(self):
+    def findLongestSubstringWithKDistinctChar(self):
       # left is the start of substring
       # right is the end of substring, being (k-1)th
       # count is the number of distinct substrings in the current substring
@@ -44,8 +44,6 @@ class SlidingWindow:
        # dictionary to keep track of how often a character shows up in the line
       dict = {}
 
-      for character in self.line:
-        dict[character] = 0
       for right in range(len(self.line)):
         rightChar = self.line[right]
         if rightChar not in dict:
@@ -60,7 +58,7 @@ class SlidingWindow:
         if maxLength <= right - left + 1:
           maxLength = right - left +1
           left_final = left
-      return self.line[left_final:left_final+maxLength] # behave like a range so [start to end -1 th]
+      return self.line[left_final:left_final+maxLength] # behave like a range() so [start to end -1 th]
 
 
 
@@ -120,13 +118,41 @@ class SlidingWindow:
       #       left+=1
       #   right+=1
       # return maxLength
+    def findLongestSubstringWithDistinctChar(self):
+      left, right, maxLength = 0, 0, 0
+
+       # dictionary to keep track of how often a character shows up in the line
+      dict = {}
+
+      for right in range(len(self.line)):
+        rightChar = self.line(right)
+        if rightChar in dict:
+          left = max(left, dict[rightChar] + 1)
+        dict[rightChar] = right
+        maxLength = max(maxLength, right - left +1)
+      return maxLength
+
+      # for right in range(len(self.line)):
+      #   rightChar = self.line[right]
+      #   if rightChar not in dict:
+      #     dict[rightChar] = 0
+      #   dict[rightChar] +=1
+      #   while dict[rightChar] > 1:
+      #     leftChar = self.line[left]
+      #     dict[leftChar] -=1
+      #     if dict[leftChar] == 0:
+      #       del dict[leftChar]
+      #     left += 1
+      #   maxLength = max(maxLength, right - left +1)
+      # return maxLength
 
 
 def main():
-    slidingWindow=SlidingWindow([3,45,-5,7,26,63,1,67], 3, 49, "cbbebi")
+    slidingWindow=SlidingWindow([3,45,-5,7,26,63,1,67], 3, 49, "abccde")
     print("Averages of subarrays of size K: " + str(slidingWindow.findAverageSubArray()))
     print("Smallest subarray with a great sum of "+str(slidingWindow.max) + " is " + str(slidingWindow.findSmallestSubArray()))
-    print("Longest substring with "+ str(slidingWindow.k)+" distinct character is "+str(slidingWindow.findLongestSubstring()))
+    print("Longest substring with "+ str(slidingWindow.k)+" distinct character is "+str(slidingWindow.findLongestSubstringWithKDistinctChar()))
     print("Max fruits into 2 baskets are "+ str(slidingWindow.fruitIntoBaskets()))
+    print("Longest Substring with Distinct Characters is " + str(slidingWindow.findLongestSubstringWithDistinctChar()))
 
 main()
