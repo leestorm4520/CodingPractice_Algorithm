@@ -60,8 +60,6 @@ class SlidingWindow:
           left_final = left
       return self.line[left_final:left_final+maxLength] # behave like a range() so [start to end -1 th]
 
-
-
       # add one character to the window (slide the window ahead)
       # shrink the window from the beginning if count > k
       # while shrinking, decrement the character's frequency going out of window
@@ -125,9 +123,14 @@ class SlidingWindow:
       dict = {}
 
       for right in range(len(self.line)):
-        rightChar = self.line(right)
+        rightChar = self.line[right]
+        # if the dict already has the right char, shrink the window from the beginning
+        # so that we have only one occurence of right char
         if rightChar in dict:
+          # in the current window, we will not have any right char after its previous index
+          # if "left" is already head of the last index of right char, we'll keep "left"
           left = max(left, dict[rightChar] + 1)
+        # insert the right char into the map
         dict[rightChar] = right
         maxLength = max(maxLength, right - left +1)
       return maxLength
