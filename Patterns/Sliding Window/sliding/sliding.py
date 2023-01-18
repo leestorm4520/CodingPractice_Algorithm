@@ -148,14 +148,28 @@ class SlidingWindow:
       #     left += 1
       #   maxLength = max(maxLength, right - left +1)
       # return maxLength
+    def findLongestSubstringWithSameLettersAfterReplacement(self):
+      left, right, numReplaced, maxLength = 0, 0, 0, 0
+
+      for right in range(len(self.line)):
+        tmpChar = self.line[right]
+        rightChar = self.line[right]
+        if tmpChar != rightChar and numReplaced<self.k:
+          numReplaced+=1
+        else:
+          left= max(left, right-self.k+1)
+          numReplaced=self.k
+        maxLength= max(maxLength, right-left+1)
+      return maxLength
 
 
 def main():
-    slidingWindow=SlidingWindow([3,45,-5,7,26,63,1,67], 3, 49, "abccde")
+    slidingWindow=SlidingWindow([3,45,-5,7,26,63,1,67], 2, 49, "aabccbb")
     print("Averages of subarrays of size K: " + str(slidingWindow.findAverageSubArray()))
     print("Smallest subarray with a great sum of "+str(slidingWindow.max) + " is " + str(slidingWindow.findSmallestSubArray()))
     print("Longest substring with "+ str(slidingWindow.k)+" distinct character is "+str(slidingWindow.findLongestSubstringWithKDistinctChar()))
     print("Max fruits into 2 baskets are "+ str(slidingWindow.fruitIntoBaskets()))
     print("Longest Substring with Distinct Characters is " + str(slidingWindow.findLongestSubstringWithDistinctChar()))
+    print("Longest Substring with Same Letters after Replacement is " + str(slidingWindow.findLongestSubstringWithSameLettersAfterReplacement()))
 
 main()
