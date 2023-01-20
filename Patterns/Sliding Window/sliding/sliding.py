@@ -1,5 +1,17 @@
 import math
 
+# Set a time limit for each question (40-45 minutes)
+
+# At the start of each question, read it out loud as you would in an interview and ask any clarifying questions (even though there is no interviewer there)
+
+# Talk through the problem and figure out the approach you will use (state brute force and then discuss how to optimize. write down how your algorithm will work)
+
+# Once you've figured out your approach, then write out the code, talking through what each part of your code is doing
+
+# After you've written out the code, review it for bugs and go through test cases if you have time
+
+
+
 class SlidingWindow:
     #assign value to object properties when initialized
     def __init__(self, arr, k, max, line):
@@ -38,7 +50,7 @@ class SlidingWindow:
       # left is the start of substring
       # right is the end of substring, being (k-1)th
       # count is the number of distinct substrings in the current substring
-      left, right, maxLength, count = 0, 0, 0, 0
+      left, right, maxLength = 0, 0, 0
       left_final = 0
 
        # dictionary to keep track of how often a character shows up in the line
@@ -119,7 +131,7 @@ class SlidingWindow:
     def findLongestSubstringWithDistinctChar(self):
       left, right, maxLength = 0, 0, 0
 
-       # dictionary to keep track of how often a character shows up in the line
+       # dictionary to keep track of characters and their position in the string
       dict = {}
 
       for right in range(len(self.line)):
@@ -139,7 +151,7 @@ class SlidingWindow:
       #   rightChar = self.line[right]
       #   if rightChar not in dict:
       #     dict[rightChar] = 0
-      #   dict[rightChar] +=1
+      #   dict[rightChar] +=1 Z
       #   while dict[rightChar] > 1:
       #     leftChar = self.line[left]
       #     dict[leftChar] -=1
@@ -149,17 +161,22 @@ class SlidingWindow:
       #   maxLength = max(maxLength, right - left +1)
       # return maxLength
     def findLongestSubstringWithSameLettersAfterReplacement(self):
-      left, right, numReplaced, maxLength = 0, 0, 0, 0
+      left, right, maxLength, maxRepeatLetterCount = 0, 0, 0, 0
+      frequencyMap={}
 
       for right in range(len(self.line)):
-        tmpChar = self.line[right]
-        rightChar = self.line[right]
-        if tmpChar != rightChar and numReplaced<self.k:
-          numReplaced+=1
-        else:
-          left= max(left, right-self.k+1)
-          numReplaced=self.k
-        maxLength= max(maxLength, right-left+1)
+        rightChar=self.line[right]
+        if rightChar not in frequencyMap:
+          frequencyMap[rightChar]=0
+        frequencyMap[rightChar]+=1
+
+        maxRepeatLetterCount = max(maxRepeatLetterCount, frequencyMap[rightChar])
+        if ((right-left+1) - maxRepeatLetterCount) > self.k:
+          leftChar = self.line[left]
+          frequencyMap[leftChar] -=1
+          left +=1
+        maxLength = max(maxLength, right - left + 1)
+
       return maxLength
 
 
