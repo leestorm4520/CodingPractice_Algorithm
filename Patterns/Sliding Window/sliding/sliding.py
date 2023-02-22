@@ -14,11 +14,12 @@ import math
 
 class SlidingWindow:
     #assign value to object properties when initialized
-    def __init__(self, arr, k, max, line):
+    def __init__(self, arr, k, max, line, binary):
         self.arr=arr
         self.k=k
         self.max = max
         self.line = line
+        self.binary = binary
     def __str__(self):
         return f"{self.arr} - {self.k}"
     def findAverageSubArray(self):
@@ -162,15 +163,18 @@ class SlidingWindow:
       # return maxLength
     def findLongestSubstringWithSameLettersAfterReplacement(self):
       left, right, maxLength, maxRepeatLetterCount = 0, 0, 0, 0
-      frequencyMap={}
+      frequencyMap={} # key: letter, value: its count in the current window
 
       for right in range(len(self.line)):
         rightChar=self.line[right]
         if rightChar not in frequencyMap:
           frequencyMap[rightChar]=0
+        # add count to the letter
         frequencyMap[rightChar]+=1
-
         maxRepeatLetterCount = max(maxRepeatLetterCount, frequencyMap[rightChar])
+        # find the length of remaining letters from the max repeated letter
+        # if the length is less than k, replace them all
+        # if not, shrink the window by decreasing leftChar freq and increment left
         if ((right-left+1) - maxRepeatLetterCount) > self.k:
           leftChar = self.line[left]
           frequencyMap[leftChar] -=1
@@ -179,14 +183,48 @@ class SlidingWindow:
 
       return maxLength
 
+    def findLongestSubarrayWithOnesAfterReplacement(self):
+      right, left, max1s, maxLength = 0,0,0,0
+      # frequency_map = {}
+      # for right in range(len(self.binary)):
+      #   rightNum = self.binary[right]
+      #   if rightNum not in frequency_map:
+      #     frequency_map[rightNum] = 0
+      #   frequency_map[rightNum] +=1
+      #   if rightNum == 1:
+      #     max1s = max(max1s, frequency_map[rightNum])
+      #   if((right-left+1) - max1s) > self.k:
+      #     leftNum = self.binary[left]
+      #     frequency_map[leftNum] -=1
+      #     left +=1
+      #   maxLength = max(maxLength, right - left +1)
+
+      for right in range(len(self.binary)):
+        if self.binary[right] == 1:
+          max1s +=1
+
+        # Current window is from left to right
+        # we have a max of 1s repeating, which means we can have a window with max_ones_counts 1s
+        # and the remaining are 0s which should be replaced with 1s
+        # If the remaining 0s are more than 'k', it is the time to shrink the window as
+        # we are not allowed to replace more than 'k' 0s
+        if ((right - left +1) - max1s) > self.k:
+          if self.binary[left] == 1:
+            max1s -=1
+          left +=1
+        maxLength = max(maxLength, right - left +1)
+
+      return maxLength
+
+
 
 def main():
-    slidingWindow=SlidingWindow([3,45,-5,7,26,63,1,67], 2, 49, "aabccbb")
+    slidingWindow=SlidingWindow([3,45,-5,7,26,63,1,67], 2, 49, "aabccbb", [0,1,1,0,0,0,1,1,0,1,1])
     print("Averages of subarrays of size K: " + str(slidingWindow.findAverageSubArray()))
     print("Smallest subarray with a great sum of "+str(slidingWindow.max) + " is " + str(slidingWindow.findSmallestSubArray()))
     print("Longest substring with "+ str(slidingWindow.k)+" distinct character is "+str(slidingWindow.findLongestSubstringWithKDistinctChar()))
     print("Max fruits into 2 baskets are "+ str(slidingWindow.fruitIntoBaskets()))
     print("Longest Substring with Distinct Characters is " + str(slidingWindow.findLongestSubstringWithDistinctChar()))
     print("Longest Substring with Same Letters after Replacement is " + str(slidingWindow.findLongestSubstringWithSameLettersAfterReplacement()))
-
+    print("Longest subarray with ones after replacement: " + str(slidingWindow.findLongestSubarrayWithOnesAfterReplacement()))
 main()
